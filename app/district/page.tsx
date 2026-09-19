@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import DemoView from "./Demo";
+
 function Section({ index, title, children }: { index: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mt-14">
@@ -82,14 +87,44 @@ function ChecklistCard({ tone, title, items }: { tone: "purple" | "card"; title:
 }
 
 export default function DistrictPage() {
+  const [tab, setTab] = useState<"case-study" | "demo">("case-study");
+  const containerWidth = tab === "demo" ? "max-w-5xl" : "max-w-3xl";
+
   return (
     <main className="district-page min-h-screen px-5 py-5 sm:px-10 lg:px-16">
-      <nav className="mx-auto flex max-w-3xl items-center justify-between border-b border-white/10 pb-5 text-sm">
+      <nav className={`mx-auto flex ${containerWidth} items-center justify-between border-b border-white/10 pb-5 text-sm`}>
         <a href="/" className="font-bold text-[#c9a8ff]">← RK / product notes</a>
         <span className="text-white/40">District / 01</span>
       </nav>
 
-      <article className="mx-auto max-w-3xl py-12 lg:py-16">
+      <div className={`mx-auto ${containerWidth} flex gap-2 pt-6`}>
+        <button
+          onClick={() => setTab("case-study")}
+          className={`rounded-full px-5 py-2 text-sm font-bold transition ${tab === "case-study" ? "bg-white text-[#0a0710]" : "border border-white/15 text-white/60 hover:text-white"}`}
+        >
+          Case Study
+        </button>
+        <button
+          onClick={() => setTab("demo")}
+          className={`rounded-full px-5 py-2 text-sm font-bold transition ${tab === "demo" ? "bg-white text-[#0a0710]" : "border border-white/15 text-white/60 hover:text-white"}`}
+        >
+          Demo
+        </button>
+      </div>
+
+      {tab === "demo" && (
+        <section className={`mx-auto ${containerWidth} py-12 lg:py-16`}>
+          <h2 className="mb-2 text-left text-2xl font-bold text-white sm:text-3xl">Try the flow</h2>
+          <p className="mb-8 max-w-2xl text-left text-sm leading-6 text-white/60">
+            A working prototype of &ldquo;Plan with Friends&rdquo; across two phones — discovery, plan-with-friends,
+            the friend notification, the interested/can&apos;t-make-it response, and the live interest dashboard.
+          </p>
+          <DemoView />
+        </section>
+      )}
+
+      {tab === "case-study" && (
+      <article className={`mx-auto ${containerWidth} py-12 lg:py-16`}>
         {/* Hero */}
         <h1 className="display text-left text-5xl leading-tight text-white sm:text-7xl">District by Zomato</h1>
 
@@ -401,6 +436,7 @@ export default function DistrictPage() {
           </p>
         </div>
       </article>
+      )}
     </main>
   );
 }
