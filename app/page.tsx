@@ -15,16 +15,24 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl">
+      <section className="mx-auto max-w-6xl space-y-5">
         <div className="mb-5 flex items-baseline justify-between">
           <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-black">Selected Products</h2>
-          <span className="text-sm text-[var(--blue)]">01 / 01</span>
+          <span className="text-sm text-[var(--blue)]">01 / 02</span>
         </div>
         <a href="/district" className="card card-hover group grid gap-6 p-6 md:grid-cols-[1fr_1.5fr_auto] md:items-center">
           <p className="text-sm text-[var(--blue)]">01 &nbsp; / &nbsp; 2026</p>
           <div>
             <h3 className="display text-4xl text-[var(--purple)]">District By Zomato</h3>
             <p className="mt-3 max-w-lg text-sm leading-6 text-black/60">Reimagining</p>
+          </div>
+          <span className="text-2xl text-[var(--red)]">↗</span>
+        </a>
+        <a href="/cook-automation" className="card card-hover group grid gap-6 p-6 md:grid-cols-[1fr_1.5fr_auto] md:items-center">
+          <p className="text-sm text-[var(--blue)]">02 &nbsp; / &nbsp; 2026</p>
+          <div>
+            <h3 className="display text-4xl text-[#8a5a00]">cookAuto</h3>
+            <p className="mt-3 max-w-lg text-sm leading-6 text-black/60">Smart kitchen coordination, from grocery order to cook confirmation</p>
           </div>
           <span className="text-2xl text-[var(--red)]">↗</span>
         </a>
