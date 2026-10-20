@@ -140,3 +140,199 @@ a { color: inherit; text-decoration: none; }
   background: #eef0e6;
   color: #14141a;
 }
+
+/* ---------- Landing page: cyber core ---------- */
+
+.cyber {
+  --cy-bg: #05060d;
+  --cy-cyan: #00f0ff;
+  --cy-magenta: #ff2bd6;
+  --cy-violet: #8b5cff;
+  --cy-lime: #c8ff3d;
+  --cy-mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, "Courier New", monospace;
+  background: var(--cy-bg);
+  color: #e6faff;
+  font-family: var(--cy-mono);
+}
+
+.cy-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+
+.cy-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%);
+  animation: cy-grid-move 6s linear infinite;
+}
+
+@keyframes cy-grid-move { to { background-position: 0 48px, 48px 0; } }
+
+.cy-scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay;
+}
+
+.cy-glow { position: absolute; border-radius: 50%; filter: blur(110px); will-change: transform; }
+.cy-glow-1 { width: 46vw; height: 46vw; left: -12vw; top: -18vw; background: rgba(139, 92, 255, 0.5); animation: cy-drift-a 20s ease-in-out infinite alternate; }
+.cy-glow-2 { width: 40vw; height: 40vw; right: -10vw; top: -6vw; background: rgba(0, 240, 255, 0.35); animation: cy-drift-b 24s ease-in-out infinite alternate; }
+.cy-glow-3 { width: 36vw; height: 36vw; left: 30vw; bottom: -18vw; background: rgba(255, 43, 214, 0.35); animation: cy-drift-a 28s ease-in-out infinite alternate-reverse; }
+
+@keyframes cy-drift-a { to { transform: translate(12vw, 8vw) scale(1.2); } }
+@keyframes cy-drift-b { to { transform: translate(-14vw, 10vw) scale(0.85); } }
+
+.cy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(0, 240, 255, 0.5);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cy-cyan);
+  background: rgba(0, 240, 255, 0.06);
+  transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+}
+
+.cy-pill:hover { background: var(--cy-cyan); color: #021014; box-shadow: 0 0 18px rgba(0, 240, 255, 0.7); }
+
+.cy-title {
+  font-family: var(--cy-mono);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 3px 0 var(--cy-magenta), -3px 0 var(--cy-cyan), 0 0 30px rgba(0, 240, 255, 0.35);
+  animation: cy-glitch 6s steps(1) infinite;
+}
+
+@keyframes cy-glitch {
+  0%, 92%, 100% { transform: none; text-shadow: 3px 0 var(--cy-magenta), -3px 0 var(--cy-cyan), 0 0 30px rgba(0, 240, 255, 0.35); }
+  93% { transform: translate(-3px, 1px); text-shadow: 7px 0 var(--cy-magenta), -7px 0 var(--cy-cyan); }
+  95% { transform: translate(3px, -1px); text-shadow: -6px 0 var(--cy-magenta), 6px 0 var(--cy-cyan); }
+  97% { transform: translate(-1px, 0); }
+}
+
+.cy-cursor { display: inline-block; width: 0.6ch; margin-left: 0.2ch; background: var(--cy-cyan); animation: cy-blink 1s steps(1) infinite; }
+@keyframes cy-blink { 50% { opacity: 0; } }
+
+.cy-ring { animation: cy-spin 40s linear infinite; transform-origin: center; }
+.cy-ring-rev { animation: cy-spin 60s linear infinite reverse; transform-origin: center; }
+@keyframes cy-spin { to { transform: rotate(360deg); } }
+
+/* carousel */
+
+.cy-wrap { container-type: size; --gap: 1.25rem; }
+
+.cy-track {
+  --cw: min(var(--w), calc(100cqh - 3rem));
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  height: 100%;
+  padding: 1.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  perspective: 1100px;
+}
+
+.cy-track::-webkit-scrollbar { display: none; }
+
+/* 4+ cards: 3 full + a half on each side, centred on the active card */
+.cy-many { --w: calc((100cqw - 4 * var(--gap)) / 4); padding-inline: calc((100cqw - var(--cw)) / 2); }
+
+/* fewer cards: share the full width (capped by height), centred */
+.cy-few { --w: calc((100cqw - (var(--n) - 1) * var(--gap)) / var(--n)); justify-content: safe center; }
+
+@media (max-width: 767px) {
+  .cy-many, .cy-few { --w: 72cqw; }
+  .cy-few { padding-inline: calc((100cqw - var(--cw)) / 2); justify-content: flex-start; }
+}
+
+.cy-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  --accent: var(--cy-cyan);
+  position: relative;
+  flex: none;
+  width: var(--cw);
+  height: var(--cw);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(0.9rem, 2.2cqh, 1.5rem);
+  scroll-snap-align: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 4px;
+  background: linear-gradient(160deg, rgba(14, 18, 36, 0.85), rgba(6, 8, 18, 0.9));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 180ms ease-out, border-color 200ms ease, box-shadow 200ms ease;
+  overflow: hidden;
+}
+
+.cy-card::before,
+.cy-card::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+}
+
+.cy-card::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+.cy-card::after { right: 8px; bottom: 8px; border-left: 0; border-top: 0; }
+
+.cy-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 38px -4px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.cy-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  background: radial-gradient(circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 35%, transparent), transparent 55%);
+}
+
+.cy-card:hover .cy-sheen { opacity: 1; }
+
+.cy-lift { transform: translateZ(24px); }
+.cy-lift-more { transform: translateZ(44px); }
+
+.cy-icon { color: var(--accent); filter: drop-shadow(0 0 10px var(--accent)); }
+
+.cy-arrow {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(0, 240, 255, 0.5);
+  color: var(--cy-cyan);
+  background: rgba(0, 240, 255, 0.06);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.cy-arrow:hover { background: var(--cy-cyan); color: #021014; box-shadow: 0 0 16px rgba(0, 240, 255, 0.7); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cy-grid, .cy-glow, .cy-title, .cy-cursor, .cy-ring, .cy-ring-rev { animation: none; }
+  .cy-card { transform: none !important; transition: none; }
+  .cy-lift, .cy-lift-more { transform: none; }
+}
