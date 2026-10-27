@@ -41,6 +41,24 @@ const products: Product[] = [
       </svg>
     ),
   },
+  {
+    href: "/second-brain",
+    index: "03",
+    year: "2026",
+    title: "Second Brain",
+    description: "Everything you read, quietly connected. A learning graph that captures, organizes and resurfaces what you save",
+    accent: "#a78bfa",
+    icon: (
+      <svg {...iconProps} aria-hidden="true">
+        <circle cx="24" cy="24" r="6" />
+        <circle cx="8" cy="12" r="3.5" />
+        <circle cx="40" cy="12" r="3.5" />
+        <circle cx="10" cy="38" r="3.5" />
+        <circle cx="39" cy="37" r="3.5" />
+        <path d="M11 14l9 7m17-7-9 7M12 35l8-8m19 7-9-7" opacity="0.55" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Home() {
